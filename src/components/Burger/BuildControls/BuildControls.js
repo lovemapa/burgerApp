@@ -24,6 +24,11 @@ export default function BuildControls(props) {
                         deleted={() => props.ingredientDeleted(ctrl.type)}
                     />
                 ))}
+
+            <button onClick={props.purchased} disabled={!props.isPurchasable}
+                className={classes.OrderButton}>
+                ORDER NOW
+                </button>
         </div>
     )
 }
