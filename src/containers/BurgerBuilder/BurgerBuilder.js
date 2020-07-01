@@ -4,9 +4,8 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import Loader from '../../components/UI/Spinner/Spinner'
 
-import axios from '../../axios-order'
+
 
 const PRICES = {
     salad: 0.5,
@@ -54,23 +53,20 @@ class BurgerBuilder extends Component {
 
     purchaseContinue = () => {
         // alert('Continue to payment')
-        this.setState({ loading: true })
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.price.toFixed(2),
-            customer: {
-                name: 'Pawan',
-                city: "Pinjore",
-                state: "Haryana"
-            }
+
+        let queyParams = []
+        for (let i in this.state.ingredients) {
+            queyParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
         }
+        queyParams.push('price=' + this.state.price)
 
-        axios.post('/orders.json', order).then(response => {
-            this.setState({ loading: false, purchased: false })
+        const queryString = queyParams.join('&');
+        // console.log(queryString);
 
-        }).catch(err => {
-            this.setState({ loading: false, purchased: false })
 
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
         })
     }
 
@@ -127,9 +123,7 @@ class BurgerBuilder extends Component {
             purchasedCancel={this.modalClosedHandler}
 
         />
-        if (this.state.loading) {
-            Ordersummary = <Loader />
-        }
+
         return (
             <Aux>
                 <Modal show={this.state.purchased}
