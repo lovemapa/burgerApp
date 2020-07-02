@@ -28,8 +28,6 @@ export default class Checkout extends Component {
                 ingredients[params[0]] = +params[1]
             }
         }
-        // console.log(ingredients);
-        console.log('componentdidmount')
         this.setState({ ingredients: ingredients, totalPrice: price })
     }
 
