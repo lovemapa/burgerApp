@@ -4,24 +4,29 @@ export default function Input(props) {
 
 
     let inputElement = null
+    let dynamiClass = [classes.InputElement]
+
+    if (props.invalid && props.shouldValidate && props.touched) {
+        dynamiClass.push(classes.Invalid)
+    }
     switch (props.elementType) {
         case ('input'): inputElement =
             < input
 
                 onChange={props.changed}
-                className={classes.InputElement}
+                className={dynamiClass.join(' ')}
                 {...props.elementConfig}
                 value={props.value} />;
             break;
         case ('textarea'): inputElement =
-            < textarea className={classes.InputElement}
+            < textarea className={dynamiClass.join(' ')}
                 onChange={props.changed}
                 {...props.elementConfig}
                 value={props.value} />
             break;
         case ('select'): inputElement =
             (< select
-                className={classes.InputElement}
+                className={dynamiClass.join(' ')}
                 onChange={props.changed}
                 value={props.value} >
                 {props.elementConfig.options.map(option => (
@@ -31,7 +36,7 @@ export default function Input(props) {
                 ))}</ select>)
             break;
         default: inputElement =
-            < input className={classes.InputElement}
+            < input className={dynamiClass.join(' ')}
                 onChange={props.changed}
                 {...props.elementConfig}
 

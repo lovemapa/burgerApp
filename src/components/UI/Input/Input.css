@@ -26,6 +26,11 @@
 }
 
 
+.Invalid{
+    border:1px solid red;
+    background-color:rgb(240, 196, 196);
+}
+
 .InputElement:focus{
     outline: none;
     background-color: #ccc;
